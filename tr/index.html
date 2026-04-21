@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Account Intelligence Brief — Harrison Fields LLP</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: #F7F9FA;
+    color: #2D3E50;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* ── Header ── */
+  .header {
+    background: #0D2137;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .header-left { display: flex; align-items: center; gap: 14px; }
+  .header-logo {
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+  .header-logo span { color: #7AB648; }
+  .header-divider { width: 1px; height: 28px; background: rgba(255,255,255,0.2); }
+  .header-label { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; }
+  .header-right { display: flex; align-items: center; gap: 12px; }
+  .urgency-badge {
+    background: #C0392B;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+  .date-label { font-size: 11px; color: rgba(255,255,255,0.45); font-weight: 500; }
+
+  /* ── Account Hero ── */
+  .account-hero {
+    background: #fff;
+    border-bottom: 1px solid #DDE3E8;
+    padding: 24px 32px 20px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .account-name {
+    font-size: 26px;
+    font-weight: 800;
+    color: #0D2137;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .account-meta { display: flex; gap: 20px; margin-top: 8px; flex-wrap: wrap; }
+  .meta-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #6B7A8D; font-weight: 500; }
+  .meta-dot { width: 4px; height: 4px; border-radius: 50%; background: #DDE3E8; }
+
+  .score-cluster { display: flex; gap: 10px; align-items: flex-start; }
+  .score-card {
+    background: #F7F9FA;
+    border: 1px solid #DDE3E8;
+    border-radius: 8px;
+    padding: 12px 16px;
+    text-align: center;
+    min-width: 90px;
+  }
+  .score-card.hot { background: #FEF0EE; border-color: #C0392B; }
+  .score-card.warm { background: #FDF6EC; border-color: #E67E22; }
+  .score-number { font-size: 28px; font-weight: 800; color: #0D2137; line-height: 1; }
+  .score-card.hot .score-number { color: #C0392B; }
+  .score-card.warm .score-number { color: #E67E22; }
+  .score-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #6B7A8D; margin-top: 3px; }
+
+  /* ── Action Bar ── */
+  .action-bar {
+    background: #1A5E6A;
+    padding: 10px 32px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .action-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.6); margin-right: 4px; }
+  .action-pill {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .action-pill.primary { background: #7AB648; }
+  .action-pill .num {
+    background: rgba(0,0,0,0.2);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 800;
+  }
+
+  /* ── Main Grid ── */
+  .main { padding: 20px 32px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* ── Section Cards ── */
+  .card {
+    background: #fff;
+    border: 1px solid #DDE3E8;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(13,33,55,0.06);
+  }
+  .card.full-width { grid-column: 1 / -1; }
+  .card.accent { border-color: #1A5E6A; box-shadow: 0 0 0 2px rgba(26,94,106,0.12); }
+
+  .card-header {
+    padding: 12px 16px 10px;
+    border-bottom: 1px solid #F0F3F6;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-icon {
+    width: 26px; height: 26px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  .card-title { font-size: 12px; font-weight: 700; color: #0D2137; text-transform: uppercase; letter-spacing: 0.06em; }
+  .card-body { padding: 14px 16px; }
+
+  /* ── Signal Items ── */
+  .signal-list { display: flex; flex-direction: column; gap: 10px; }
+  .signal-item { display: flex; gap: 10px; align-items: flex-start; }
+  .signal-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 4px;
+  }
+  .signal-dot.red { background: #C0392B; }
+  .signal-dot.amber { background: #E67E22; }
+  .signal-dot.green { background: #7AB648; }
+  .signal-dot.teal { background: #1A5E6A; }
+  .signal-text { font-size: 12px; color: #2D3E50; line-height: 1.45; }
+  .signal-text strong { color: #0D2137; font-weight: 700; }
+  .signal-date { font-size: 10px; color: #6B7A8D; font-weight: 500; display: block; margin-top: 1px; }
+
+  /* ── Usage Health ── */
+  .usage-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .usage-item { background: #F7F9FA; border-radius: 8px; padding: 10px 12px; }
+  .usage-metric { font-size: 22px; font-weight: 800; color: #0D2137; line-height: 1; }
+  .usage-metric.red { color: #C0392B; }
+  .usage-metric.amber { color: #E67E22; }
+  .usage-metric.green { color: #7AB648; }
+  .usage-sublabel { font-size: 10px; color: #6B7A8D; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 3px; }
+  .usage-trend { font-size: 10px; margin-top: 5px; font-weight: 600; }
+  .usage-trend.down { color: #C0392B; }
+  .usage-trend.up { color: #7AB648; }
+  .usage-trend.flat { color: #E67E22; }
+
+  .progress-bar-wrap { margin-top: 6px; background: #DDE3E8; border-radius: 4px; height: 4px; overflow: hidden; }
+  .progress-bar { height: 4px; border-radius: 4px; }
+
+  /* ── Recommended Actions ── */
+  .action-list { display: flex; flex-direction: column; gap: 10px; }
+  .action-item {
+    border: 1px solid #DDE3E8;
+    border-radius: 8px;
+    padding: 11px 13px;
+    display: flex;
+    gap: 11px;
+    align-items: flex-start;
+  }
+  .action-item.urgent { border-color: #C0392B; background: #FEF8F8; }
+  .action-item.high { border-color: #E67E22; background: #FDFAF5; }
+  .action-item.medium { border-color: #1A5E6A; background: #F5FAFB; }
+  .action-rank {
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800; flex-shrink: 0; color: #fff;
+  }
+  .action-rank.urgent { background: #C0392B; }
+  .action-rank.high { background: #E67E22; }
+  .action-rank.medium { background: #1A5E6A; }
+  .action-content { flex: 1; }
+  .action-title { font-size: 12px; font-weight: 700; color: #0D2137; }
+  .action-desc { font-size: 11px; color: #6B7A8D; margin-top: 2px; line-height: 1.4; }
+  .action-tag {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-top: 5px;
+  }
+  .action-tag.trigger { background: #FEF0EE; color: #C0392B; }
+  .action-tag.expansion { background: #EDF7E4; color: #5a8e2f; }
+  .action-tag.renewal { background: #E8F4F6; color: #1A5E6A; }
+
+  /* ── Context intel ── */
+  .intel-list { display: flex; flex-direction: column; gap: 8px; }
+  .intel-row {
+    display: flex; gap: 8px; align-items: flex-start;
+    padding: 8px 10px;
+    background: #F7F9FA;
+    border-radius: 6px;
+    border-left: 3px solid transparent;
+  }
+  .intel-row.risk { border-left-color: #C0392B; }
+  .intel-row.opp { border-left-color: #7AB648; }
+  .intel-row.neutral { border-left-color: #DDE3E8; }
+  .intel-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+  .intel-text { font-size: 11px; color: #2D3E50; line-height: 1.45; }
+  .intel-text strong { color: #0D2137; font-weight: 700; }
+
+  /* ── Footer ── */
+  .footer {
+    background: #0D2137;
+    padding: 12px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-brand { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.4); letter-spacing: 0.05em; }
+  .footer-brand span { color: #7AB648; }
+  .footer-note { font-size: 10px; color: rgba(255,255,255,0.3); }
+
+  /* ── Chip ── */
+  .chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 10px; font-weight: 700;
+    padding: 2px 8px; border-radius: 20px;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .chip.red { background: #FEF0EE; color: #C0392B; }
+  .chip.green { background: #EDF7E4; color: #5a8e2f; }
+  .chip.amber { background: #FDF6EC; color: #c06010; }
+  .chip.teal { background: #E8F4F6; color: #1A5E6A; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-left">
+    <div class="header-logo">Revenue <span>Insight</span></div>
+    <div class="header-divider"></div>
+    <div class="header-label">Account Intelligence Brief</div>
+  </div>
+  <div class="header-right">
+    <div class="urgency-badge">🔴 Act This Week</div>
+    <div class="date-label">Generated: April 21, 2026</div>
+  </div>
+</div>
+
+<!-- Account Hero -->
+<div class="account-hero">
+  <div>
+    <div class="account-name">Harrison Fields LLP</div>
+    <div class="account-meta">
+      <div class="meta-item">⚖️ Regional Law Firm</div>
+      <div class="meta-dot"></div>
+      <div class="meta-item">📍 Chicago, IL</div>
+      <div class="meta-dot"></div>
+      <div class="meta-item">👥 87 Attorneys</div>
+      <div class="meta-dot"></div>
+      <div class="meta-item">🗓️ Renewal: Aug 14, 2026 <span style="color:#C0392B; font-weight:700;"> — 116 days</span></div>
+      <div class="meta-dot"></div>
+      <div class="meta-item">💰 ARR: $142,000 &nbsp;<span class="chip teal">Westlaw + Practical Law</span></div>
+    </div>
+  </div>
+  <div class="score-cluster">
+    <div class="score-card hot">
+      <div class="score-number">31</div>
+      <div class="score-label">Risk Score</div>
+    </div>
+    <div class="score-card warm">
+      <div class="score-number">68</div>
+      <div class="score-label">Opp Score</div>
+    </div>
+  </div>
+</div>
+
+<!-- Action Bar -->
+<div class="action-bar">
+  <div class="action-label">Top Actions</div>
+  <div class="action-pill primary"><span class="num">1</span> Call re: usage drop before renewal window opens</div>
+  <div class="action-pill"><span class="num">2</span> Pitch litigation analytics expansion</div>
+  <div class="action-pill"><span class="num">3</span> Reference M&A practice buildout</div>
+</div>
+
+<!-- Main Grid -->
+<div class="main">
+
+  <!-- External Signals -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:#FEF0EE;">📡</div>
+      <div class="card-title">External Signals</div>
+      <div style="margin-left:auto;"><span class="chip red">3 new this week</span></div>
+    </div>
+    <div class="card-body">
+      <div class="signal-list">
+        <div class="signal-item">
+          <div class="signal-dot red"></div>
+          <div class="signal-text">
+            <strong>Lateral hire: 4 new litigation partners from DLA Piper.</strong> Practice area expanding rapidly — likely to stress current research seat allocation.
+            <span class="signal-date">Apr 18, 2026 · LinkedIn + Law360</span>
+          </div>
+        </div>
+        <div class="signal-item">
+          <div class="signal-dot amber"></div>
+          <div class="signal-text">
+            <strong>New M&A practice group announced.</strong> Harrison Fields hired a 6-attorney M&A team; no current Practical Law M&A modules in their subscription.
+            <span class="signal-date">Apr 11, 2026 · Press Release</span>
+          </div>
+        </div>
+        <div class="signal-item">
+          <div class="signal-dot red"></div>
+          <div class="signal-text">
+            <strong>IL Supreme Court amended civil procedure rules</strong> effective June 1 — directly impacts litigation practice. High relevance to their core workflow.
+            <span class="signal-date">Apr 9, 2026 · IL Courts</span>
+          </div>
+        </div>
+        <div class="signal-item">
+          <div class="signal-dot teal"></div>
+          <div class="signal-text">
+            <strong>Firm ranked #4 in Midwest litigation</strong> by American Lawyer 2026 rankings — signals growth trajectory and potential budget expansion.
+            <span class="signal-date">Apr 2, 2026 · Am Law</span>
+          </div>
+        </div>
+        <div class="signal-item">
+          <div class="signal-dot amber"></div>
+          <div class="signal-text">
+            <strong>Managing partner quoted in Crain's</strong> on AI adoption in legal research: "We're evaluating how AI tools integrate with our existing platforms."
+            <span class="signal-date">Mar 28, 2026 · Crain's Chicago</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Usage Health -->
+  <div class="card accent">
+    <div class="card-header">
+      <div class="card-icon" style="background:#E8F4F6;">📊</div>
+      <div class="card-title">Westlaw Usage Health</div>
+      <div style="margin-left:auto;"><span class="chip amber">Needs Attention</span></div>
+    </div>
+    <div class="card-body">
+      <div class="usage-grid">
+        <div class="usage-item">
+          <div class="usage-metric amber">58%</div>
+          <div class="usage-sublabel">Seats Active (30d)</div>
+          <div class="usage-trend down">↓ was 74% last quarter</div>
+          <div class="progress-bar-wrap"><div class="progress-bar" style="width:58%;background:#E67E22;"></div></div>
+        </div>
+        <div class="usage-item">
+          <div class="usage-metric red">22d</div>
+          <div class="usage-sublabel">Avg Days Since Login</div>
+          <div class="usage-trend down">↑ was 11d last quarter</div>
+          <div class="progress-bar-wrap"><div class="progress-bar" style="width:72%;background:#C0392B;"></div></div>
+        </div>
+        <div class="usage-item">
+          <div class="usage-metric red">3</div>
+          <div class="usage-sublabel">Power Users (of 40 seats)</div>
+          <div class="usage-trend down">↓ was 9 last quarter</div>
+          <div class="progress-bar-wrap"><div class="progress-bar" style="width:8%;background:#C0392B;"></div></div>
+        </div>
+        <div class="usage-item">
+          <div class="usage-metric green">91%</div>
+          <div class="usage-sublabel">Practical Law Adoption</div>
+          <div class="usage-trend up">↑ strong — up from 78%</div>
+          <div class="progress-bar-wrap"><div class="progress-bar" style="width:91%;background:#7AB648;"></div></div>
+        </div>
+      </div>
+      <div style="margin-top:12px; background:#FDF6EC; border-left:3px solid #E67E22; border-radius:4px; padding:9px 11px;">
+        <div style="font-size:10px; font-weight:700; color:#c06010; text-transform:uppercase; letter-spacing:0.07em;">⚠ Churn Signal</div>
+        <div style="font-size:11px; color:#2D3E50; margin-top:3px; line-height:1.4;">Westlaw seat usage has dropped 16 pts in 90 days. Pattern matches pre-churn accounts. Investigate before renewal window opens.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recommended Actions -->
+  <div class="card full-width accent">
+    <div class="card-header">
+      <div class="card-icon" style="background:#EDF7E4;">⚡</div>
+      <div class="card-title">Recommended Actions — Prioritized</div>
+      <div style="margin-left:auto; font-size:11px; color:#6B7A8D; font-weight:600;">Rep: Sarah Chen · Owner since Jan 2025</div>
+    </div>
+    <div class="card-body">
+      <div class="action-list">
+        <div class="action-item urgent">
+          <div class="action-rank urgent">1</div>
+          <div class="action-content">
+            <div class="action-title">Call Managing Partner re: Westlaw usage drop — before renewal window opens</div>
+            <div class="action-desc">58% seat activation + 22-day avg login gap = classic pre-churn signal. 4 new litigation hires are not yet set up. Frame as a "make sure your new team is fully activated" call — not a renewal call. Opens the door to re-engagement and upsell in same conversation.</div>
+            <span class="action-tag trigger">🔴 Churn Risk</span>
+          </div>
+        </div>
+        <div class="action-item high">
+          <div class="action-rank high">2</div>
+          <div class="action-content">
+            <div class="action-title">Pitch Practical Law M&A module — new practice group is unserved</div>
+            <div class="action-desc">Harrison Fields just built a 6-attorney M&A team with zero Practical Law M&A coverage. They're already strong adopters of PL (91%). This is a natural extension conversation — they know the product, they just need the module that maps to their new work.</div>
+            <span class="action-tag expansion">🟢 Expansion</span>
+          </div>
+        </div>
+        <div class="action-item medium">
+          <div class="action-rank medium">3</div>
+          <div class="action-content">
+            <div class="action-title">Reference IL Supreme Court rule change in outreach — proves value of real-time monitoring</div>
+            <div class="action-desc">New civil procedure rules take effect June 1. Send a pointed note: "Saw the IL Supreme Court update — wanted to make sure your litigation team has the Westlaw alert set up. Here's how." Easy touchpoint that demonstrates why research monitoring matters and re-activates dormant users.</div>
+            <span class="action-tag trigger">📋 Trigger Event</span>
+          </div>
+        </div>
+        <div class="action-item" style="border-color:#7AB648; background:#F8FDF3;">
+          <div class="action-rank" style="background:#7AB648;">4</div>
+          <div class="action-content">
+            <div class="action-title">Leverage Am Law ranking in renewal conversation — they're winning</div>
+            <div class="action-desc">#4 Midwest litigation ranking signals growth, confidence, and potential budget flexibility. Start renewal with congratulations + "firms at this level are expanding their research infrastructure, not trimming it." Sets a different anchor than a standard renewal pitch.</div>
+            <span class="action-tag renewal">🔵 Renewal</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firm Intel -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:#F0F3F6;">🏛️</div>
+      <div class="card-title">Firm Context</div>
+    </div>
+    <div class="card-body">
+      <div class="intel-list">
+        <div class="intel-row opp">
+          <div class="intel-icon">📈</div>
+          <div class="intel-text"><strong>Revenue trajectory: strong.</strong> Firm grew headcount 14% YoY. Litigation + M&A expanding. Budget posture likely favorable at renewal.</div>
+        </div>
+        <div class="intel-row risk">
+          <div class="intel-icon">⚠️</div>
+          <div class="intel-text"><strong>IT consolidation underway.</strong> Crain's article noted "platform rationalization" initiative. Competitor tools may be under evaluation. Timing matters.</div>
+        </div>
+        <div class="intel-row neutral">
+          <div class="intel-icon">👤</div>
+          <div class="intel-text"><strong>Champion: David Nguyen (Dir. of Research Services)</strong> — strong PL advocate internally. Westlaw engagement is mostly litigation partners, not research staff.</div>
+        </div>
+        <div class="intel-row opp">
+          <div class="intel-icon">🤝</div>
+          <div class="intel-text"><strong>Peer firm Kovacs & Reilly</strong> (same segment, Chicago) expanded their TR contract by 40% after a practice group addition. Shareable reference.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Competitive Radar -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:#FEF0EE;">🎯</div>
+      <div class="card-title">Competitive Radar</div>
+      <div style="margin-left:auto;"><span class="chip red">Active Risk</span></div>
+    </div>
+    <div class="card-body">
+      <div class="intel-list">
+        <div class="intel-row risk">
+          <div class="intel-icon">⚡</div>
+          <div class="intel-text"><strong>Lexis+ AI pilot detected.</strong> 2 attorneys at the firm followed Lexis+ on LinkedIn in the past 30 days. Usage drop may be partially exploratory.</div>
+        </div>
+        <div class="intel-row risk">
+          <div class="intel-icon">🔍</div>
+          <div class="intel-text"><strong>vLex showing up in M&A conversations</strong> at regional firms. New M&A team may be evaluating options before getting locked in to TR stack.</div>
+        </div>
+        <div class="intel-row neutral">
+          <div class="intel-icon">✅</div>
+          <div class="intel-text"><strong>Casetext (now part of TR) not yet mentioned.</strong> If competitor AI tools are on their radar, Casetext CoCounsel is a strong counter — they don't know they already have access.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-brand">Revenue <span>Insight</span> · Account Intelligence Brief</div>
+  <div class="footer-note">Dummy brief for illustration purposes · revenueinsight.com</div>
+</div>
+
+</body>
+</html>
